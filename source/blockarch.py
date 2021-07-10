@@ -77,11 +77,11 @@ def print_banner():
 
 def args_parser():
 	parser = argparse.ArgumentParser()
-    	parser.add_argument('--pcap', help='PCAP file to analyze')
-    	parser.add_argument('--rfile', help='Rules file')
-    	parser.add_argument('--logdir', help='specify Log Directory full path')
-    	parser.add_argument('--interface', help='Interface to Sniff')
-    	parser.add_argument('--quiet', help='Quiet Mode', action="store_true")
-    	return parser.parse_args()
+	parser.add_argument('--pcap', help='PCAP file to analyze')
+	parser.add_argument('--rfile', help='Rules file')
+	parser.add_argument('--logdir', help='specify Log Directory full path')
+	parser.add_argument('--interface', help='Interface to Sniff')
+	parser.add_argument('--quiet', help='Quiet Mode', action="store_true")
+	return parser.parse_args()
 
 main()
