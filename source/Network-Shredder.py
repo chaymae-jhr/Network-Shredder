@@ -26,19 +26,19 @@ def main():
 	interface = args['interface']
 	
 	if pcap_file != None and interface != None:
-		raise Exception(colored("[!] You can not use PCAP option for Live Detection !!","red"))
+		raise Exception(colored("you cant specify an interface and a pcap file at the same time","red"))
 	if log_dir==None:
 		log_dir='.'
-	filename = log_dir+"/Network-Shredder_" + str(now).replace(' ','_') + ".log"
+	filename = log_dir+"/Network-Shredder_" + str(now).replace(' ','-') + ".log"
 	logging.basicConfig(filename=filename , format='%(asctime)s %(name)-4s %(levelname)-4s %(message)s',level=logging.INFO)
 
 	print(colored("[+] Starting Network-Shreddering...", "green"))
 
-	print(colored("[~] Reading Rules File "+rules_file+"...", "blue"))
+	print(colored("[~] Reading Rules File "+rules_file+"...", "orange"))
 
 	rules_list = readrules(rules_file)
 
-	print(colored("[+] Finished Processing Rules File "+rules_file+"...", "green"))
+	print(colored(" done reading rules' file ...", "green"))
 	counter_rules = []
 	timers = []
 	for rule in rules_list:
@@ -64,34 +64,24 @@ def main():
 			sniffer = Sniffer(rules_list=rules_list,pcap_file=pcap_file,interface=None,quiet=False, counters=counter_rules, timers=timers)
 			sniffer.start()
 
-	if arg.web:
-		print(colored("[+] You Can Access The Web Interface Via : ","yellow")+colored("http://127.0.0.1:5000/logs","green"))
-		check_call(['/usr/bin/python3','web.py','-a',filename],stdout=DEVNULL, stderr=STDOUT)
-
 
 
 def print_banner():
 
-	fig = Figlet(font="future")
-	banner = fig.renderText("  Network Shredder")
-	print(colored(banner, 'blue'))
-	with open("./banner.txt") as f:
-		for line in f:
-			print(colored(line,'magenta',attrs=['blink']),end='')
-	print(colored("|_ Version :", 'red',attrs=['bold']),colored(" 1.0#beta","cyan"))
-	print(colored("|_ Authors :", 'red',attrs=['bold']),colored(" AOUAJ & RAHALI","cyan"))
-	print(colored("|_ Usage :",'red',attrs=['bold']),colored(" python3 Network-Shredder.py rules.txt","cyan"))
+	fig = Figlet(font="doh")
+	banner = fig.renderText("BlockArch")
+	print(colored(banner, 'red'))
+	print(colored("|_ Usage :",'red',attrs=['bold']),colored(" python3 blockarch.py rules.txt","blue"))
 
 
 
 def args_parser():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--pcap', help='PCAP file (Exclusive for PCAP Mode)')
-	parser.add_argument('file',  help='Rules file')
-	parser.add_argument('--logdir',  help='Log Directory (FULL PATH) e.g: /path/to/log/')
-	parser.add_argument('--interface', help='Sniff Interface (e.g: tun0)')
-	parser.add_argument('--web', help='Show Logs In Web Interface', action="store_true")
-	parser.add_argument('--quiet', help='Quiet Mode', action="store_true")
-	return parser.parse_args()
+    	parser.add_argument('--pcap', help='PCAP file to analyze')
+    	parser.add_argument('--rfile', help='Rules file')
+    	parser.add_argument('--logdir', help='specify Log Directory full path')
+    	parser.add_argument('--interface', help='Interface to Sniff')
+    	parser.add_argument('--quiet', help='Quiet Mode', action="store_true")
+    	return parser.parse_args()
 
 main()
