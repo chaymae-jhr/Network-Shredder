@@ -32,9 +32,9 @@ def main():
 	filename = log_dir+"/Network-Shredder_" + str(now).replace(' ','-') + ".log"
 	logging.basicConfig(filename=filename , format='%(asctime)s %(name)-4s %(levelname)-4s %(message)s',level=logging.INFO)
 
-	print(colored("[+] Starting Network-Shreddering...", "green"))
+	print(colored("Blockarch started.", 'green'))
 
-	print(colored("[~] Reading Rules File "+rules_file+"...", "orange"))
+	print(colored("Reading Rules File "+rules_file+"...", "orange"))
 
 	rules_list = readrules(rules_file)
 
